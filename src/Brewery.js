@@ -5,14 +5,16 @@ function Brewery(props) {
     const {brewery, clickToLike, index, liked} = props
     return (
         <>
-            <li>
-                {Object.entries(brewery).map(([key, value]) => (
-                    <ol key={`brew-${key}`}>{key}:{value}</ol>
-                ))}
-            </li>
+            <div style={{ fontSize: "12px", lineHeight: "1.2", textAlign: "left" }}>
+            {Object.entries(brewery).map(([key, value]) => (
+                <p key={`brew-${key}`} style={{ margin: "4px 0" }}>
+                {key}: {value}
+                </p>
+            ))}
+            </div>
         
             <button
-                style={{ fontSize: "24px" }} // Corrected "font-size" to "fontSize"
+                style={{ fontSize: "12px" }} // Corrected "font-size" to "fontSize"
                 onClick={() => {
                     console.log(`Button was clicked at index: ${index}`);
                     clickToLike(index);

@@ -50,28 +50,32 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Click on the brewery to hide or show its content.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <ol>
+          <div>
             { listOfBreweries.map( (item, index) => { 
               return (
                 <>
-                  <button key={`button-${index}`} onClick={ () => this.toggleCollapse(index)}>Click to collapse</button>
-                  { !isCollapsed[index] && 
-                    <Brewery key={`brewery-${index}`} brewery={item} clickToLike={this.handleClick}  index={index} liked={liked[index]}></Brewery>
-                  }
+                  <button
+                    key={`button-${index}`}
+                    onClick={() => this.toggleCollapse(index)}
+                    style={{ width: "90%", padding: "5%", marginBottom: "10px" }}
+                  >
+                    {item.name}
+                  </button>
+
+                  <section style={{ display: isCollapsed[index] ? "none" : "block" }}>
+                    <Brewery
+                      brewery={item}
+                      clickToLike={this.handleClick}
+                      index={index}
+                      liked={liked[index]}
+                    />
+                  </section>
                 </>
               );
             })};                      
-          </ol>
+          </div>
 
         </header>
       </div>
