@@ -11,7 +11,8 @@ class App extends Component {
     super()
 
     this.state = {
-      listOfBreweries: []
+      listOfBreweries: [],
+      liked: []
     }
   }
 
@@ -23,6 +24,13 @@ class App extends Component {
     // shorthand for .then( listOfBreweries => this.setState({listOfBreweries: listOfBreweries}))
   }
   
+  handleClick = (index) => {
+    console.log(`To verify...button was clicked at index: ${index}`)
+
+    const likedArrayCopy = [...this.state.liked]
+    likedArrayCopy[index] = !likedArrayCopy[index]
+    this.setState({liked: likedArrayCopy})
+  }
   
   render () {
     return (
@@ -42,15 +50,8 @@ class App extends Component {
           </a>
           <ol>
             { this.state.listOfBreweries.map( (item, index) => {
-                console.log(item)
-                return (<Brewery key={index} brewery={item} websiteurl={item.website_url}></Brewery>);
-                
-                // return Object.entries(item).map(([objectkey, value]) => {
-                //   console.log(`${value}`)
-                //   return (<Brewery key={index} brewery={value} websiteurl={item.website_url}></Brewery>);
-                })};
-              
-                        
+                return (<Brewery key={index} brewery={item} websiteurl={item.website_url} clickToLike={this.handleClick} index={index} liked={this.state.liked[index]}></Brewery>);
+            })};                      
           </ol>
 
         </header>
