@@ -12,7 +12,8 @@ class App extends Component {
 
     this.state = {
       listOfBreweries: [],
-      liked: []
+      liked: [],
+      isCollapsed: []
     }
   }
 
@@ -27,12 +28,23 @@ class App extends Component {
   handleClick = (index) => {
     console.log(`To verify...button was clicked at index: ${index}`)
 
-    const likedArrayCopy = [...this.state.liked]
+    // To update state based on previous state, you can pass an object into setState
+    // React will merge this object with the current state.
+    const likedArrayCopy = [...this.state.liked]  // create a shallow copy b/c can't manipulate  arrays inside setState
     likedArrayCopy[index] = !likedArrayCopy[index]
     this.setState({liked: likedArrayCopy})
   }
   
+  toggleCollapse = (index) => {
+    const isCollapsedCopy = [...this.state.isCollapsed]
+    isCollapsedCopy[index] = !isCollapsedCopy[index]
+    this.setState({isCollapsed: isCollapsedCopy});    
+  }
+
   render () {
+
+    const {listOfBreweries, liked, isCollapsed} = this.state
+
     return (
       <div className="App">
         <header className="App-header">
@@ -49,8 +61,15 @@ class App extends Component {
             Learn React
           </a>
           <ol>
-            { this.state.listOfBreweries.map( (item, index) => {
-                return (<Brewery key={index} brewery={item} websiteurl={item.website_url} clickToLike={this.handleClick} index={index} liked={this.state.liked[index]}></Brewery>);
+            { listOfBreweries.map( (item, index) => { 
+              return (
+                <>
+                  <button key={`button-${index}`} onClick={ () => this.toggleCollapse(index)}>Click to collapse</button>
+                  { !isCollapsed[index] && 
+                    <Brewery key={`brewery-${index}`} brewery={item} clickToLike={this.handleClick}  index={index} liked={liked[index]}></Brewery>
+                  }
+                </>
+              );
             })};                      
           </ol>
 
