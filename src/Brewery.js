@@ -1,8 +1,12 @@
 import React from 'react';
+import LikeButton from './LikeButton';
 
 function Brewery(props) {
 
     const {brewery, clickToLike, index, liked} = props
+
+    const isLiked = liked.includes(index)
+
     return (
         <>
             <div style={{ fontSize: "12px", lineHeight: "1.2", textAlign: "left" }}>
@@ -12,19 +16,18 @@ function Brewery(props) {
                 </p>
             ))}
             </div>
-        
-            <button
-                style={{ fontSize: "12px" }} // Corrected "font-size" to "fontSize"
+
+            <LikeButton clickToLike={clickToLike} isLiked={isLiked} index={index}></LikeButton>
+
+            {/* <button
+                style={{ fontSize: "12px", backgroundColor: isLiked? "pink": "transparent" }}
                 onClick={() => {
                     console.log(`Button was clicked at index: ${index}`);
                     clickToLike(index);
                 }}
             >
                 Button to like <i className="fa fa-thumbs-up"></i>
-            </button>
-
-            {liked? <p>Liked! <i className="fa fa-thumbs-up"></i></p>: <p></p>}
-
+            </button> */}
 
             {/* <iframe src={brewery.websiteurl}></iframe> */}
         </>

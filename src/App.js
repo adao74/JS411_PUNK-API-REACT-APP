@@ -26,14 +26,19 @@ class App extends Component {
   }
   
   handleClick = (index) => {
-    console.log(`To verify...button was clicked at index: ${index}`)
-
-    // To update state based on previous state, you can pass an object into setState
-    // React will merge this object with the current state.
-    const likedArrayCopy = [...this.state.liked]  // create a shallow copy b/c can't manipulate  arrays inside setState
-    likedArrayCopy[index] = !likedArrayCopy[index]
-    this.setState({liked: likedArrayCopy})
-  }
+    console.log(`To verify...button was clicked at index: ${index}`);
+  
+    this.setState((prevState) => {
+      if (!prevState.liked.includes(index)) {
+        // Add index if not already liked
+        return { liked: [...prevState.liked, index] };
+      } else {
+        // Remove index if already liked
+        return { liked: prevState.liked.filter((element) => element !== index) };
+      }
+    });
+  };
+  
   
   toggleCollapse = (index) => {
     const isCollapsedCopy = [...this.state.isCollapsed]
@@ -69,7 +74,7 @@ class App extends Component {
                       brewery={item}
                       clickToLike={this.handleClick}
                       index={index}
-                      liked={liked[index]}
+                      liked={liked}
                     />
                   </section>
                 </>
